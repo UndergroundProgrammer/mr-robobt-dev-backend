@@ -15,7 +15,7 @@ const googleOptions = {
   clientID: config.google.clientId,
   clientSecret: config.google.clientSecret,
   callbackURL:
-    "https://tripapp-backend.up.railway.app/api/auth/google/callback",
+    `${config.backendUrl}api/auth/google/callback`,
   passReqToCallback: true,
 };
 
@@ -23,13 +23,13 @@ const instagramOption = {
   clientID: config.instagram.clientId,
   clientSecret: config.instagram.clientSecret,
   callbackURL:
-    "https://tripapp-backend.up.railway.app/api/auth/instagram/callback/",
+  `${config.backendUrl}api/auth/instagram/callback/`,
 };
 const facebookOptions = {
   clientID: config.facebook.clientId,
   clientSecret: config.facebook.clientSecret,
   callbackURL:
-    "https://tripapp-backend.up.railway.app/api/auth/facebook/callback",
+  `${config.backendUrl}api/auth/facebook/callback`,
   profileFields: ["id", "email", "gender", "name", "verified", "birthday"],
 };
 

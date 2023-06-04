@@ -53,12 +53,15 @@ If you did not request any password resets, then ignore this email.`;
  */
 const sendVerificationEmail = async (username, to, token) => {
     const subject = 'Email Verification';
-    const verificationEmailUrl = `${config.clientUrl}auth/signup?token=${token}`;
-    const placeholder={
-        link:verificationEmailUrl,
-        username:username
-    }
-    const html=loadHtmlTemplate("emailverification.html",placeholder)
+    const verificationEmailUrl = `${config.backendUrl}api/auth/verify-email?token=${token}`;
+    const placeholder = {
+        verificationLink: verificationEmailUrl,
+        username: username,
+    };
+    const html = loadHtmlTemplate(
+        'emailVerificationTemplate.html',
+        placeholder
+    );
     await sendEmail(to, subject, html);
 };
 
@@ -72,9 +75,12 @@ If you did not create an account, then ignore this email.`;
 };
 const sendSignupInvitationEmail = async (to, group, token) => {
     const subject = 'Signup invitation';
-    const verificationEmailUrl = `${config.clientUrl}auth/signup?token=${token}&group=${group}`;
-    const html = `<p>Dear user,<br/>You are being invited create your account on MR. Robot dev, click on the button:<a href=${verificationEmailUrl} >Signup<a/><br/>
-Thank you.`;
+    const invitationEmailUrl = `${config.clientUrl}auth/signup?token=${token}&group=${group}`;
+    const placeholder = {
+        verificationLink: invitationEmailUrl,
+    };
+    const html = loadHtmlTemplate('signupInvitationTemplate.html', placeholder);
+
     await sendEmail(to, subject, html);
 };
 

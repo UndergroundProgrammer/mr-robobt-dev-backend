@@ -9,6 +9,7 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
+    await checkEmail(userBody.email);
     const user = await User.create(userBody);
     return user;
 };
@@ -24,7 +25,7 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-    return User.findById(id)
+    return User.findById(id);
 };
 
 /**
@@ -36,8 +37,8 @@ const getUserByEmail = async (email) => {
     return User.findOne({ email });
 };
 
-const checkEmail = async (userBody) => {
-    if (await User.isEmailTaken(userBody.email)) {
+const checkEmail = async (email) => {
+    if (await User.isEmailTaken(email)) {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
     }
     return true;
@@ -71,8 +72,6 @@ const deleteUserById = async (userId) => {
     await user.remove();
     return user;
 };
-
-
 
 const googleLogin = async (userData) => {
     const user = await getUserByEmail(userData.email);

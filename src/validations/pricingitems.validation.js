@@ -10,10 +10,28 @@ const addItem = {
         type: Joi.string()
             .valid('Functionality', 'Device', 'Service')
             .required(),
-            
+    }),
+};
+const updateItem = {
+    params: Joi.object({
+        itemId: Joi.string().custom(objectId),
+    }),
+    body: Joi.object({
+        name: Joi.string().trim(),
+        price: Joi.number(),
+        description: Joi.string().trim(),
+        logo: Joi.string().trim(),
+        type: Joi.string().valid('Functionality', 'Device', 'Service'),
+    }),
+};
+const ItemById = {
+    params: Joi.object({
+        itemId: Joi.string().custom(objectId),
     }),
 };
 
 module.exports = {
     addItem,
+    updateItem,
+    ItemById,
 };

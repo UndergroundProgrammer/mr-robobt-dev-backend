@@ -10,10 +10,39 @@ const addItem = async (itemData) => {
     return item;
 };
 const getItems = async () => {
-    const item = await PricingItem.find();
+    const items = await PricingItem.aggregate([
+        {
+            $group: {
+                _id: '$type',
+                objects: { $push: '$$ROOT' },
+            },
+        },
+    ]);
+    const groupedItems = items.reduce((acc, { _id, objects }) => {
+        acc[_id] = objects;
+        return acc;
+    }, {});
+    return groupedItems;
+};
+const updateItem = async (itemId, updateItem) => {
+    const item = await getItemById(itemId);
+    Object.assign(item, updateItem);
+    return item.save();
+};
+const deleteItem = async (itemId) => {
+    const item = await PricingItem.findByIdAndDelete(itemId);
+    if (!item) throw new ApiError(httpStatus.NOT_FOUND, 'Item not Found');
+    return true;
+};
+const getItemById = async (itemId) => {
+    const item = await PricingItem.findById(itemId);
+    if (!item) throw new ApiError(httpStatus.NOT_FOUND, 'Item not found!');
     return item;
 };
 module.exports = {
     addItem,
     getItems,
+    getItemById,
+    deleteItem,
+    updateItem,
 };

@@ -33,6 +33,8 @@ const envVarsSchema = Joi.object()
       "Client secert for facebook"
     ),
     CLIENT_URL: Joi.string().description("Client side url"),
+
+    BACKEND_URL: Joi.string().description("Backend url"),
   })
   .unknown();
 
@@ -46,6 +48,7 @@ if (error) {
 
 module.exports = {
   clientUrl: envVars.CLIENT_URL,
+  backendUrl:envVars.BACKEND_URL,
   port: envVars.PORT,
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === "test" ? "-test" : ""),

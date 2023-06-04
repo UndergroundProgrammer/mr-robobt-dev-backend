@@ -1,5 +1,4 @@
 const express = require('express');
-const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
 const { pricingItemsValidations } = require('../validations');
 const { pricingItemsController } = require('../controllers');
@@ -13,5 +12,19 @@ router
         pricingItemsController.addItem
     )
     .get(pricingItemsController.getAllItems);
+router
+    .route('/:itemId')
+    .get(
+        validate(pricingItemsValidations.ItemById),
+        pricingItemsController.getItem
+    )
+    .put(
+        validate(pricingItemsValidations.updateItem),
+        pricingItemsController.updateItem
+    )
+    .delete(
+        validate(pricingItemsValidations.ItemById),
+        pricingItemsController.deleteItem
+    );
 
 module.exports = router;

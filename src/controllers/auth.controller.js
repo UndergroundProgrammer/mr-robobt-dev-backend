@@ -36,9 +36,19 @@ const register = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-    const userData = await authService.verifyEmail(req.body.verifyEmailToken);
-    const user = await userService.createUser(userData.sub);
-    res.status(httpStatus.CREATED).send(user);
+    const { group, token } = req.query;
+    console.log('toke', token);
+    const tokenVerified = await authService.verifyEmail(token);
+
+    let redirectUrl = config.clientUrl;
+    if (tokenVerified && tokenVerified.type == 'invitation') {
+        tokenService.saveRevokedToken(token, tokenVerified.type);
+    } else if (tokenVerified && tokenVerified.type == 'verifyEmail') {
+        const user = await userService.createUser(tokenVerified.sub);
+        redirectUrl += `auth/login`;
+        res.redirect(redirectUrl);
+    }
+    res.status(200).send({ verifed: true });
 });
 
 const login = catchAsync(async (req, res) => {

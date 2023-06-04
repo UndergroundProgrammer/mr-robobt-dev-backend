@@ -17,7 +17,7 @@ router.post(
     validate(authValidation.register),
     authController.register
 );
-router.post(
+router.get(
     '/verify-email',
     validate(authValidation.verifyEmail),
     authController.verifyEmail

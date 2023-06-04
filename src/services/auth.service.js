@@ -13,7 +13,7 @@ const emailService = require('./email.service');
 
 const sendSignupInvitation = async (body) => {
     const { email, group } = body;
-    const token = await tokenService.generateVerifyEmailToken(email);
+    const token = await tokenService.generateInvitationEmailToken(email);
     if (token)
         await emailService.sendSignupInvitationEmail(email, group, token);
     return true;   
