@@ -11,9 +11,11 @@ const updateUser = {
         bio: Joi.string(),
         photoUrl: Joi.string(),
         phoneNo: Joi.string(),
-        isActive:Joi.bool(),
+        isActive: Joi.bool(),
         role: Joi.string(),
-
+        group: Joi.string(),
+        signedUpBy: Joi.string(),
+        isApproved: Joi.bool(),
     }),
 };
 
@@ -31,5 +33,5 @@ const deleteUser = {
 module.exports = {
     updateUser,
     getUser,
-    deleteUser
+    deleteUser,
 };

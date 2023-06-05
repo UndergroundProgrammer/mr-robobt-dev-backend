@@ -16,22 +16,26 @@ const sendSignupInvitation = async (body) => {
     const token = await tokenService.generateInvitationEmailToken(email);
     if (token)
         await emailService.sendSignupInvitationEmail(email, group, token);
-    return true;   
+    return true;
 };
 
 const loginUserWithEmailAndPassword = async (email, password) => {
     const user = await userService.getUserByEmail(email);
-    if (!user ||!(await user.isPasswordMatch(password))) {
+    if (!user || !(await user.isPasswordMatch(password))) {
         throw new ApiError(
             httpStatus.UNAUTHORIZED,
             'Incorrect email or password'
         );
-    }    
-    else if(!user.isActive){
+    } else if (!user.isApproved) {
         throw new ApiError(
             httpStatus.UNAUTHORIZED,
             'Your Account has not been approved by admin'
-        );  
+        );
+    } else if (!user.isActive) {
+        throw new ApiError(
+            httpStatus.UNAUTHORIZED,
+            'Your Account has been deactivated'
+        );
     }
 
     return user;

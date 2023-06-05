@@ -15,7 +15,10 @@ const register = {
         password: Joi.string().custom(password),
         phoneNo: Joi.string(),
         photoUrl: Joi.string(),
-        role: Joi.string().valid('staff','admin','client'),
+        role: Joi.string().valid('staff', 'admin', 'client'),
+        group: Joi.string(),
+        signedUpBy: Joi.string(),
+        isApproved: Joi.bool(),
     }),
 };
 
@@ -54,7 +57,7 @@ const resetPassword = {
 const verifyEmail = {
     query: Joi.object().keys({
         token: Joi.string().required(),
-        group:Joi.string()
+        group: Joi.string(),
     }),
 };
 const changePassword = {

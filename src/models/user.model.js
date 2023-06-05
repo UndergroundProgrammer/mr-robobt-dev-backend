@@ -55,9 +55,21 @@ const userSchema = mongoose.Schema(
         },
         isActive: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         bio: {
+            type: String,
+            trim: true,
+        },
+        isApproved: {
+            type: Boolean,
+            default: false,
+        },
+        group: {
+            type: String,
+            trim: true,
+        },
+        signedUpBy: {
             type: String,
             trim: true,
         },

@@ -20,7 +20,7 @@ const sendInvite = catchAsync(async (req, res) => {
     });
 });
 const register = catchAsync(async (req, res) => {
-    const user = await userService.checkEmail(req.body);
+    const user = await userService.checkEmail(req.body.email);
     if (user) {
         const verifyEmailToken = await tokenService.generateVerifyEmailToken(
             req.body
@@ -36,7 +36,7 @@ const register = catchAsync(async (req, res) => {
 });
 
 const verifyEmail = catchAsync(async (req, res) => {
-    const { group, token } = req.query;
+    const { token } = req.query;
     console.log('toke', token);
     const tokenVerified = await authService.verifyEmail(token);
 
@@ -45,7 +45,7 @@ const verifyEmail = catchAsync(async (req, res) => {
         tokenService.saveRevokedToken(token, tokenVerified.type);
     } else if (tokenVerified && tokenVerified.type == 'verifyEmail') {
         const user = await userService.createUser(tokenVerified.sub);
-        redirectUrl += `auth/login`;
+        redirectUrl += `auth/verifyEmail`;
         res.redirect(redirectUrl);
     }
     res.status(200).send({ verifed: true });
