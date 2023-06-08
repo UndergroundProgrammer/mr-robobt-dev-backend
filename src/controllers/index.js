@@ -3,3 +3,4 @@ module.exports.userController = require('./user.controller');
 module.exports.chatController = require('./chat.controller');
 module.exports.contactController = require('./contact.controller');
 module.exports.pricingItemsController = require('./pricingitems.controller');
+module.exports.blogController = require('./blog.controller');
