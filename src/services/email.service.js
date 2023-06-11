@@ -36,12 +36,15 @@ const sendEmail = async (to, subject, text, html) => {
  * @param {string} token
  * @returns {Promise}
  */
-const sendResetPasswordEmail = async (to, token) => {
-    const subject = 'Reset password';
-    // replace this url with the link to the reset password page of your front-end app
-    const resetPasswordUrl = `${config.clientUrl}resetpassword?token=${token}`;
-    const html = `<p>Dear user,<br/>To reset your password, click on this link::<a href=${resetPasswordUrl} >Reset Password<a/><br/>
-If you did not request any password resets, then ignore this email.`;
+const sendResetPasswordEmail = async (to, username, token) => {
+    const subject = 'Reset Password';
+    const resetpasswordEmailUrl = `${config.clientUrl}auth/reset_password?token=${token}`;
+    const placeholder = {
+        username: username,
+        verificationLink: resetpasswordEmailUrl,
+    };
+    const html = loadHtmlTemplate('forgotPasswordTemplate.html', placeholder);
+
     await sendEmail(to, subject, html);
 };
 

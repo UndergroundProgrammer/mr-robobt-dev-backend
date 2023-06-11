@@ -37,10 +37,10 @@ const register = catchAsync(async (req, res) => {
 
 const verifyEmail = catchAsync(async (req, res) => {
     const { token } = req.query;
-    console.log('toke', token);
     const tokenVerified = await authService.verifyEmail(token);
 
     let redirectUrl = config.clientUrl;
+
     if (tokenVerified && tokenVerified.type == 'invitation') {
         tokenService.saveRevokedToken(token, tokenVerified.type);
     } else if (tokenVerified && tokenVerified.type == 'verifyEmail') {
@@ -67,11 +67,11 @@ const logout = async (req, res) => {
 };
 
 const forgotPassword = catchAsync(async (req, res) => {
-    const resetPasswordToken = await tokenService.generateResetPasswordToken(
-        req.body.email
-    );
+    const { resetPasswordToken, username } =
+        await tokenService.generateResetPasswordToken(req.body.email);
     await emailService.sendResetPasswordEmail(
         req.body.email,
+        username,
         resetPasswordToken
     );
     res.send({ resetPasswordToken });

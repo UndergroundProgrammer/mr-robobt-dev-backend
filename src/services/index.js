@@ -6,3 +6,4 @@ module.exports.emailService = require('./email.service');
 module.exports.contactService = require('./contact.service');
 module.exports.pricingItemsServices = require('./pricingitems.service');
 module.exports.blogServices = require('./blog.service');
+module.exports.permissionServices = require('./permissions.service');

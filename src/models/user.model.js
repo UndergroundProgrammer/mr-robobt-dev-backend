@@ -66,8 +66,8 @@ const userSchema = mongoose.Schema(
             default: false,
         },
         group: {
-            type: String,
-            trim: true,
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Permissions',
         },
         signedUpBy: {
             type: String,

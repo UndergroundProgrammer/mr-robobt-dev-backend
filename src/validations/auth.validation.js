@@ -4,7 +4,7 @@ const { password, objectId } = require('./custom.validation');
 const sendInvite = {
     body: Joi.object().keys({
         email: Joi.string().required().email(),
-        group: Joi.string().required(),
+        group: Joi.custom(objectId).required(),
     }),
 };
 const register = {
@@ -16,7 +16,7 @@ const register = {
         phoneNo: Joi.string(),
         photoUrl: Joi.string(),
         role: Joi.string().valid('staff', 'admin', 'client'),
-        group: Joi.string(),
+        group: Joi.custom(objectId),
         signedUpBy: Joi.string(),
         isApproved: Joi.bool(),
     }),

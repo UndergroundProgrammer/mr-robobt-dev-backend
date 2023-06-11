@@ -95,7 +95,7 @@ const generateResetPasswordToken = async (email) => {
         expires,
         tokenTypes.RESET_PASSWORD
     );
-    return resetPasswordToken;
+    return { resetPasswordToken, username: user.firstName };
 };
 
 /**

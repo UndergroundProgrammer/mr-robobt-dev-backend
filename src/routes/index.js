@@ -5,6 +5,7 @@ const chat = require('./chat.route');
 const contact = require('./contact.route');
 const pricingItem = require('./pricingitems.route');
 const blogRoute = require('./blog.route');
+const permissionRoute = require('./permission.route');
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const defaultRoutes = [
     {
         path: '/blogs',
         route: blogRoute,
+    },
+    {
+        path: '/permissions',
+        route: permissionRoute,
     },
 ];
 
