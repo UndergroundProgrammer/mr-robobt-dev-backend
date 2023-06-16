@@ -5,7 +5,7 @@ const ChatSchema = new mongoose.Schema(
     {
         senderId: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: 'User',
+            ref: 'Chat Users',
         },
         receiverId: {
             type: mongoose.SchemaTypes.ObjectId,
@@ -18,6 +18,10 @@ const ChatSchema = new mongoose.Schema(
         receiverCount: {
             type: Number,
             default: 0,
+        },
+        isClosed: {
+            type: Boolean,
+            default: false,
         },
     },
     {

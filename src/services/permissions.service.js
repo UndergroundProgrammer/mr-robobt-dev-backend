@@ -19,21 +19,23 @@ const updatePermission = async (permissionId, newPermission) => {
     const permission = await Permission.findByIdAndUpdate(
         permissionId,
         {
-            $set: {
-                'permissions.$[elem]': newPermission.permissions,
-            },
+            $set: newPermission.permissions.reduce(
+                (acc, permission, index) => ({
+                    ...acc,
+                    [`permissions.${index}`]: permission,
+                }),
+                {}
+            ),
         },
         {
-            arrayFilters: [
-                {
-                    'elem.route': {
-                        $in: newPermission.permissions.map((p) => p.route),
-                    },
-                },
-            ],
+            arrayFilters: newPermission.permissions.map((p) => ({
+                'elem.route': p.route,
+            })),
             new: true,
         }
     );
+
+    if (!permission) throw new ApiError(httpStatus.NOT_FOUND, 'No group Found');
 
     return permission;
 };

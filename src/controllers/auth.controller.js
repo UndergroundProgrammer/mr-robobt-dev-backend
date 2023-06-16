@@ -44,6 +44,8 @@ const verifyEmail = catchAsync(async (req, res) => {
     if (tokenVerified && tokenVerified.type == 'invitation') {
         tokenService.saveRevokedToken(token, tokenVerified.type);
     } else if (tokenVerified && tokenVerified.type == 'verifyEmail') {
+        const ip =
+            req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         const user = await userService.createUser(tokenVerified.sub);
         redirectUrl += `auth/verifyEmail`;
         res.redirect(redirectUrl);

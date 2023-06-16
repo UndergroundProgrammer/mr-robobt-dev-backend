@@ -21,24 +21,47 @@ const io = new Server(server, {
     cors: '*',
 });
 let activeUsers = [];
+let activeStaff = [];
 
 io.on('connection', (socket) => {
     // add new User
     socket.on('new-user-add', (newUserId) => {
-        // if user is not added previously
-        if (!activeUsers.some((user) => user.userId === newUserId)) {
+        if (
+            newUserId &&
+            !activeUsers.some((user) => user.userId === newUserId)
+        ) {
+            // if user is not added previously
             activeUsers.push({ userId: newUserId, socketId: socket.id });
         }
+
         // send all active users to new user
         io.emit('get-users', activeUsers);
+        io.emit('get-staff', activeStaff);
+    });
+    socket.on('new-staff-add', (newUserId) => {
+        if (
+            newUserId &&
+            !activeStaff.some((user) => user.userId === newUserId)
+        ) {
+            // if user is not added previously
+            activeStaff.push({ userId: newUserId, socketId: socket.id });
+            console.log('staffmember added to online', activeStaff);
+        }
+        io.emit('get-staff', activeStaff);
+    });
+    socket.on('get-staff-user', () => {
+        if (activeStaff.length > 0) {
+            io.emit('online-staff-user', activeStaff[0]);
+        }
     });
 
     socket.on('disconnect', () => {
         // remove user from active users
         activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
-
+        activeStaff = activeStaff.filter((user) => user.socketId !== socket.id);
         // send all active users to all users
         io.emit('get-users', activeUsers);
+        io.emit('get-staff', activeStaff);
     });
 
     socket.on('forceDisconnect', (userId) => {
@@ -49,13 +72,16 @@ io.on('connection', (socket) => {
         io.emit('get-users', activeUsers);
     });
     // send message to a specific user
-    socket.on('send-message', async (receiverId, chatId, count, data) => {
+    socket.on('send-message', async (receiverId, data) => {
         const user = activeUsers.find((usera) => usera.userId === receiverId);
-        try {
-            await chatService.updateUnreadCount(chatId, count);
-        } catch (error) {
-            console.log(error);
+        console.log(receiverId, user, activeUsers);
+        if (user) {
+            io.to(user.socketId).emit('receive-message', data);
         }
+    });
+    socket.on('send-message-staff', async (receiverId, data) => {
+        const user = activeStaff.find((usera) => usera.userId === receiverId);
+        console.log(receiverId, user, activeStaff);
         if (user) {
             io.to(user.socketId).emit('receive-message', data);
         }

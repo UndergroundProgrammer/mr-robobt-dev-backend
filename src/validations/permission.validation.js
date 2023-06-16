@@ -7,6 +7,7 @@ const subPermission = Joi.object({
     delete: Joi.boolean(),
     update: Joi.boolean(),
     view: Joi.boolean(),
+    _id: Joi.custom(objectId),
 });
 const addPermission = {
     body: Joi.object({

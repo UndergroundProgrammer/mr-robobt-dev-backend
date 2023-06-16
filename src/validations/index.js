@@ -5,3 +5,5 @@ module.exports.contactValidations = require('./contact.validation');
 module.exports.pricingItemsValidations = require('./pricingitems.validation');
 module.exports.blogsValidation = require('./blogs.validation');
 module.exports.permissionsValidation = require('./permission.validation');
+module.exports.chatUserValidation = require('./chatuser.validation');
+module.exports.newsLetterUserValidation = require('./newsLetterUser.validation');

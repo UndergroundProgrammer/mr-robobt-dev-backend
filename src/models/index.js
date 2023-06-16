@@ -6,3 +6,5 @@ module.exports.PricingItem = require('./PricingItems.model');
 module.exports.Token = require('./tokens.model');
 module.exports.Blog = require('./blogs.model');
 module.exports.Permission = require('./permissions.model');
+module.exports.ChatUser = require('./chatuser.model');
+module.exports.NewsLetterUser = require('./newsletterusers.model');
