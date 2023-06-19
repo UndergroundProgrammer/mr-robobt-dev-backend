@@ -28,6 +28,10 @@ const newsLetterUsersSchema = mongoose.Schema(
             type: String,
             trim: true,
         },
+        unsubscribedBy: {
+            type: String,
+            trim: true,
+        },
     },
     {
         timestamps: true,

@@ -9,15 +9,19 @@ const createChat = async (data) => {
             httpStatus.NOT_ACCEPTABLE,
             'you couldnot message to yourself'
         );
-    const findChat = await Chat.findOne({ senderId, receiverId });
+    const findChat = await Chat.findOne({ senderId, receiverId }).populate(
+        'senderId receiverId',
+        'firstName lastName photoUrl email'
+    );
     if (findChat) return findChat;
     const chat = await Chat.create({ senderId, receiverId });
-    return chat;
+    chat.populate('senderId receiverId', 'firstName lastName photoUrl email');
+    return chat.save();
 };
 const findUserChats = async (userId) => {
     const chat = await Chat.find({
         $or: [{ senderId: userId }, { receiverId: userId }],
-    }).populate('senderId receiverId', 'firstName lastName photoUrl');
+    }).populate('senderId receiverId', 'firstName lastName photoUrl email');
 
     if (!chat)
         throw new ApiError(

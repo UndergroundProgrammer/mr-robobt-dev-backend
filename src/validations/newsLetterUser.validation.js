@@ -8,6 +8,7 @@ const updateUser = {
     body: Joi.object().keys({
         reason: Joi.string(),
         status: Joi.string(),
+        unsubscribedBy: Joi.string(),
     }),
 };
 

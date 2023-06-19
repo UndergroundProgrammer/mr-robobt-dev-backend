@@ -8,3 +8,4 @@ module.exports.Blog = require('./blogs.model');
 module.exports.Permission = require('./permissions.model');
 module.exports.ChatUser = require('./chatuser.model');
 module.exports.NewsLetterUser = require('./newsletterusers.model');
+module.exports.Visitor = require('./visitors.model');

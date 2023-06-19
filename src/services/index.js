@@ -9,3 +9,4 @@ module.exports.blogServices = require('./blog.service');
 module.exports.permissionServices = require('./permissions.service');
 module.exports.chatuserServices = require('./chatUser.service');
 module.exports.newsletterUserServices = require('./newsletteruser.service');
+module.exports.VisitorServices = require('./visitors.service');

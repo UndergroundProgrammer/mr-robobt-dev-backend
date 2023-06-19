@@ -129,6 +129,10 @@ const generateInvitationEmailToken = async (email) => {
 
     return inviteEmailToken;
 };
+const generateChatLinkToken = async (chat) => {
+    const chatLink = generateToken(chat, false, tokenTypes.CHAT_LINK);
+    return chatLink;
+};
 const saveRevokedToken = async (token, type) => {
     return Token.create({ token, type });
 };
@@ -146,4 +150,5 @@ module.exports = {
     generateVerifyEmailToken,
     generateInvitationEmailToken,
     saveRevokedToken,
+    generateChatLinkToken,
 };

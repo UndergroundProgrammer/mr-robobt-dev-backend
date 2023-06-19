@@ -6,7 +6,7 @@ const contact = require('./contact.route');
 const pricingItem = require('./pricingitems.route');
 const blogRoute = require('./blog.route');
 const permissionRoute = require('./permission.route');
-
+const visitorRoute = require('./visitor.route');
 const router = express.Router();
 
 const defaultRoutes = [
@@ -37,6 +37,10 @@ const defaultRoutes = [
     {
         path: '/permissions',
         route: permissionRoute,
+    },
+    {
+        path: '/visitors-location',
+        route: visitorRoute,
     },
 ];
 

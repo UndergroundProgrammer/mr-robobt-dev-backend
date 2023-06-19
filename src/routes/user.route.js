@@ -13,6 +13,7 @@ const {
 } = require('../controllers');
 
 const router = express.Router();
+router.route('/send-chatlink').post(userController.sendUserChatLink);
 router
     .route('/newsletterusers')
     .post(

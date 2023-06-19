@@ -5,6 +5,7 @@ const { chatController } = require('../controllers');
 const { chatValidations } = require('../validations');
 
 const router = express.Router();
+router.route('/get-chat-by-link').get(chatController.getChatByLink);
 router.post(
     '/createMessage',
     validate(chatValidations.createMessage),

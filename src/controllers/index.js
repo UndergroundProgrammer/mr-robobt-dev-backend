@@ -7,3 +7,4 @@ module.exports.blogController = require('./blog.controller');
 module.exports.permissionController = require('./permission.controller');
 module.exports.chatUserController = require('./chatUser.controller');
 module.exports.newsLetterUsersController = require('./newsLetterUser.controller');
+module.exports.visitorController = require('./visitor.controller');

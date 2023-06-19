@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
             // if user is not added previously
             activeUsers.push({ userId: newUserId, socketId: socket.id });
         }
+        console.log('user new added to online', activeUsers);
 
         // send all active users to new user
         io.emit('get-users', activeUsers);
@@ -85,6 +86,10 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.socketId).emit('receive-message', data);
         }
+    });
+    socket.on('get-online-users', async () => {
+        socket.emit('online-staff-users', activeStaff);
+        socket.emit('online-users', activeUsers);
     });
 });
 

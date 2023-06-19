@@ -18,6 +18,11 @@ const updateUser = {
         isApproved: Joi.bool(),
     }),
 };
+const chatLink = {
+    body: Joi.object().keys({
+        chat: Joi.object,
+    }),
+};
 
 const getUser = {
     params: Joi.object().keys({
@@ -34,4 +39,5 @@ module.exports = {
     updateUser,
     getUser,
     deleteUser,
+    chatLink,
 };

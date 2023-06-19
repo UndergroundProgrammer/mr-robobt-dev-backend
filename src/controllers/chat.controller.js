@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchAsync');
-const { chatService } = require('../services');
+const { chatService, tokenService } = require('../services');
 
 const createChat = catchAsync(async (req, res) => {
     const chat = await chatService.createChat(req.body);
@@ -42,6 +42,11 @@ const updateChat = catchAsync(async (req, res) => {
     const chat = await chatService.updateChat(req.params.chatId, req.body);
     res.status(200).send(chat);
 });
+const getChatByLink = catchAsync(async (req, res) => {
+    const chat = await tokenService.verifyToken(req.query.token);
+    res.status(200).send(chat.sub);
+});
+
 module.exports = {
     createChat,
     userChats,
@@ -51,4 +56,5 @@ module.exports = {
     deleteChat,
     updateChat,
     setUnreadCount,
+    getChatByLink,
 };

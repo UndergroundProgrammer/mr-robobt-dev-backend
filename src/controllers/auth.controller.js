@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const geoip = require('geoip-lite');
 const catchAsync = require('../utils/catchAsync');
 const {
     authService,
@@ -22,6 +23,15 @@ const sendInvite = catchAsync(async (req, res) => {
 const register = catchAsync(async (req, res) => {
     const user = await userService.checkEmail(req.body.email);
     if (user) {
+        const ip =
+            req.headers['cf-connecting-ip'] ||
+            req.headers['x-real-ip'] ||
+            req.headers['x-forwarded-for'] ||
+            req.socket.remoteAddress ||
+            '';
+        const geo = geoip.lookup(ip);
+        const country = geo ? geo.country : 'UNKNOWN';
+        req.body.country = country;
         const verifyEmailToken = await tokenService.generateVerifyEmailToken(
             req.body
         );
@@ -44,8 +54,6 @@ const verifyEmail = catchAsync(async (req, res) => {
     if (tokenVerified && tokenVerified.type == 'invitation') {
         tokenService.saveRevokedToken(token, tokenVerified.type);
     } else if (tokenVerified && tokenVerified.type == 'verifyEmail') {
-        const ip =
-            req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         const user = await userService.createUser(tokenVerified.sub);
         redirectUrl += `auth/verifyEmail`;
         res.redirect(redirectUrl);
@@ -55,6 +63,7 @@ const verifyEmail = catchAsync(async (req, res) => {
 
 const login = catchAsync(async (req, res) => {
     const { email, password } = req.body;
+
     const user = await authService.loginUserWithEmailAndPassword(
         email,
         password

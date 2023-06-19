@@ -17,7 +17,7 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['']);
+    const filter = pick(req.query, ['status']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await newsletterUserServices.queryNewsLetterUsers(
         filter,

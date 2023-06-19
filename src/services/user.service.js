@@ -64,6 +64,7 @@ const updateUserById = async (userId, updateBody) => {
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
+
 const deleteUserById = async (userId) => {
     const user = await getUserById(userId);
     if (!user) {

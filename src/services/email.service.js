@@ -86,6 +86,17 @@ const sendSignupInvitationEmail = async (to, group, token) => {
 
     await sendEmail(to, subject, html);
 };
+const sendChatLinkEmail = async (to, name, token) => {
+    const subject = 'Chat Receipt';
+    const chatLink = `${config.clientUserUrl}?chatlink=${token}`;
+    const placeholder = {
+        username: name,
+        verificationLink: chatLink,
+    };
+    const html = loadHtmlTemplate('chatLinkTemplate.html', placeholder);
+
+    await sendEmail(to, subject, html);
+};
 
 module.exports = {
     transport,
@@ -94,4 +105,5 @@ module.exports = {
     sendVerificationEmail,
     sendEmailOnCreateUser,
     sendSignupInvitationEmail,
+    sendChatLinkEmail,
 };
