@@ -19,7 +19,15 @@ const createVisitor = catchAsync(async (req, res) => {
     });
     res.send(user);
 });
+const getVisitors = catchAsync(async (req, res) => {
+    const filter = pick(req.query, []);
+    const options = pick(req.query, ['sortBy', 'limit', 'page']);
+
+    const user = await VisitorServices.getVisitor(filter, options);
+    res.status(200).send(user);
+});
 
 module.exports = {
     createVisitor,
+    getVisitors,
 };
