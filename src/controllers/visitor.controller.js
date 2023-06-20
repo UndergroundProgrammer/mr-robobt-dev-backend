@@ -3,7 +3,7 @@ const geoip = require('geoip-lite');
 const { getName } = require('country-list');
 const catchAsync = require('../utils/catchAsync');
 const { VisitorServices } = require('../services');
-
+const pick = require('../utils/pick');
 const createVisitor = catchAsync(async (req, res) => {
     const ip =
         req.headers['cf-connecting-ip'] ||
