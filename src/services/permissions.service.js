@@ -19,13 +19,16 @@ const updatePermission = async (permissionId, newPermission) => {
     const permission = await Permission.findByIdAndUpdate(
         permissionId,
         {
-            $set: newPermission.permissions.reduce(
-                (acc, permission, index) => ({
-                    ...acc,
-                    [`permissions.${index}`]: permission,
-                }),
-                {}
-            ),
+            $set: {
+                groupName: newPermission.groupName,
+                ...newPermission.permissions.reduce(
+                    (acc, permission, index) => ({
+                        ...acc,
+                        [`permissions.${index}`]: permission,
+                    }),
+                    {}
+                ),
+            },
         },
         {
             arrayFilters: newPermission.permissions.map((p) => ({

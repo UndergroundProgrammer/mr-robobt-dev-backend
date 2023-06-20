@@ -4,5 +4,5 @@ const { visitorController } = require('../controllers');
 const router = express.Router();
 
 router.route('/').get(visitorController.createVisitor);
-router.route('/users', visitorController.getVisitors);
+router.route('/users').get(visitorController.getVisitors);
 module.exports = router;

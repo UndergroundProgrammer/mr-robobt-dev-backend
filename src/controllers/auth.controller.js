@@ -28,9 +28,9 @@ const register = catchAsync(async (req, res) => {
             req.headers['x-real-ip'] ||
             req.headers['x-forwarded-for'] ||
             req.socket.remoteAddress ||
-            '';
+            'UNKNOWN';
         const geo = geoip.lookup(ip);
-        const country = geo ? geo.country : 'UNKNOWN';
+        const country = geo ? getName(geo.country) : 'UNKNOWN';
         req.body.country = country;
         const verifyEmailToken = await tokenService.generateVerifyEmailToken(
             req.body
