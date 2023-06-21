@@ -25,7 +25,7 @@ let activeStaff = [];
 
 io.on('connection', (socket) => {
     // add new User
-    socket.on('new-user-add', (newUserId) => {
+    socket.on('new-user-add', (newUserId, staffSockrtId) => {
         if (
             newUserId &&
             !activeUsers.some((user) => user.userId === newUserId)
@@ -38,6 +38,8 @@ io.on('connection', (socket) => {
         // send all active users to new user
         io.emit('get-users', activeUsers);
         io.emit('get-staff', activeStaff);
+        console.log(staffSockrtId, 'cnoversation event sended to this');
+        io.to(staffSockrtId).emit('new-conversation', () => {});
     });
     socket.on('new-staff-add', (newUserId) => {
         if (
