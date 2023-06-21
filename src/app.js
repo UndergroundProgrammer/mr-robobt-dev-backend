@@ -29,11 +29,9 @@ if (config.env !== 'test') {
 // set security HTTP headers
 app.use(helmet());
 
-// parse to rawbody for stripe endpoint
 // sanitize request data
 app.use(xss());
 
-app.use('/api/stripe/webhook', express.raw({ type: '*/*' }));
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: false }));
 // parse json request body
