@@ -20,6 +20,7 @@ const getUsers = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['isActive', 'role', 'isApproved']);
     filter.role = filter.role || { $ne: 'admin' };
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
+    Object.assign(options, { populate: 'group-groupName' });
     const result = await userService.queryUsers(filter, options);
     res.send(result);
 });
