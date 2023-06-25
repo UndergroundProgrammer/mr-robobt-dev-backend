@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { permissionServices } = require('../services');
+const { permissionServices, userService } = require('../services');
 
 const addpermission = catchAsync(async (req, res) => {
     const permission = await permissionServices.addPermission(req.body);
@@ -44,10 +44,16 @@ const getpermission = catchAsync(async (req, res) => {
     );
     res.status(httpStatus.OK).send(permission);
 });
+const getGroupUsers = catchAsync(async (req, res) => {
+    const users = await userService.getAllUsersByGroupId(req.params.groupId);
+    res.status(httpStatus.OK).send(users);
+});
+
 module.exports = {
     addpermission,
     getAllpermissions,
     updatepermission,
     deletepermission,
     getpermission,
+    getGroupUsers,
 };

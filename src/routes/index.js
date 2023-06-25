@@ -7,6 +7,8 @@ const pricingItem = require('./pricingitems.route');
 const blogRoute = require('./blog.route');
 const permissionRoute = require('./permission.route');
 const visitorRoute = require('./visitor.route');
+const newslettersRoute = require('./newsletters.route');
+const captchaRoute = require('./captcha.route');
 const router = express.Router();
 
 const defaultRoutes = [
@@ -41,6 +43,14 @@ const defaultRoutes = [
     {
         path: '/visitors-location',
         route: visitorRoute,
+    },
+    {
+        path: '/newsletters',
+        route: newslettersRoute,
+    },
+    {
+        path: '/captchas',
+        route: captchaRoute,
     },
 ];
 

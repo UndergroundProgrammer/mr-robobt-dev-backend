@@ -10,3 +10,5 @@ module.exports.permissionServices = require('./permissions.service');
 module.exports.chatuserServices = require('./chatUser.service');
 module.exports.newsletterUserServices = require('./newsletteruser.service');
 module.exports.VisitorServices = require('./visitors.service');
+module.exports.NewsLetterServices = require('./newsletters.service');
+module.exports.CaptchaServices = require('./captcha.service');

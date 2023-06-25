@@ -9,8 +9,8 @@ const contactUs = async (contactData) => {
     }
     return contact;
 };
-const getcontactForms = async (filters,options) => {
-    const contact = await Contact.paginate(filters,options);
+const getcontactForms = async (filters, options) => {
+    const contact = await Contact.paginate(filters, options);
     return contact;
 };
 module.exports = {

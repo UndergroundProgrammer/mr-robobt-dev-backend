@@ -54,7 +54,10 @@ io.on('connection', (socket) => {
     });
     socket.on('get-staff-user', () => {
         if (activeStaff.length > 0) {
-            io.emit('online-staff-user', activeStaff[0]);
+            const number = Math.floor(Math.random() * activeStaff.length) + 0;
+            io.emit('online-staff-user', activeStaff[number]);
+        } else {
+            io.emit('online-staff-user', null);
         }
     });
 

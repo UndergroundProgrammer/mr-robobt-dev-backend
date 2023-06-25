@@ -98,6 +98,11 @@ const sendChatLinkEmail = async (to, name, token) => {
     await sendEmail(to, subject, html);
 };
 
+const sendNewsLetterSubscribedEmail = async (to) => {
+    const subject = 'NewsLetter Subscription';
+    const html = loadHtmlTemplate('newsLetterSubscriptionTemplate.html');
+    await sendEmail(to, subject, html);
+};
 module.exports = {
     transport,
     sendEmail,
@@ -106,4 +111,5 @@ module.exports = {
     sendEmailOnCreateUser,
     sendSignupInvitationEmail,
     sendChatLinkEmail,
+    sendNewsLetterSubscribedEmail,
 };

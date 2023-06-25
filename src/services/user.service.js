@@ -95,7 +95,18 @@ const changePassword = async (userId, data) => {
         throw new Error(error);
     }
 };
-
+const getAllUsersByGroupId = async (groupId) => {
+    const users = await User.find(
+        {
+            group: groupId,
+        },
+        ['firstName', 'surName']
+    );
+    if (!users) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'This group have on users');
+    }
+    return users;
+};
 module.exports = {
     createUser,
     queryUsers,
@@ -106,4 +117,5 @@ module.exports = {
     checkEmail,
     googleLogin,
     changePassword,
+    getAllUsersByGroupId,
 };

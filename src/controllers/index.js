@@ -8,3 +8,5 @@ module.exports.permissionController = require('./permission.controller');
 module.exports.chatUserController = require('./chatUser.controller');
 module.exports.newsLetterUsersController = require('./newsLetterUser.controller');
 module.exports.visitorController = require('./visitor.controller');
+module.exports.newsLettersController = require('./newsletter.controller');
+module.exports.captchaController = require('./captcha.controller');

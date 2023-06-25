@@ -9,3 +9,5 @@ module.exports.Permission = require('./permissions.model');
 module.exports.ChatUser = require('./chatuser.model');
 module.exports.NewsLetterUser = require('./newsletterusers.model');
 module.exports.Visitor = require('./visitors.model');
+module.exports.NewsLetter = require('./newsletters.model');
+module.exports.Captcha = require('./captcha.model');

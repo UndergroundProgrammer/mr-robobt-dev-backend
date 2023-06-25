@@ -130,7 +130,8 @@ const generateInvitationEmailToken = async (email) => {
     return inviteEmailToken;
 };
 const generateChatLinkToken = async (chat) => {
-    const chatLink = generateToken(chat, false, tokenTypes.CHAT_LINK);
+    const expires = moment().add(config.jwt.chatLinkExpirationDays, 'days');
+    const chatLink = generateToken(chat, expires, tokenTypes.CHAT_LINK);
     return chatLink;
 };
 const saveRevokedToken = async (token, type) => {

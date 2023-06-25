@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const { toJSON, paginate } = require('./plugins');
 const pricingItem = {
-    _id:false,
+    _id: false,
     name: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     price: {
-      type: Number,
-      required: true,
+        type: Number,
+        required: true,
     },
-  };
+};
 const contactSchema = mongoose.Schema(
     {
         fullName: {
@@ -40,21 +40,24 @@ const contactSchema = mongoose.Schema(
         type: {
             type: String,
             trim: true,
-            enum: ['App pricing', 'Contact us'],
+            enum: ['App pricing', 'Contact us', 'Live chat'],
             default: 'Contact us',
         },
+        subject: {
+            type: String,
+            trim: true,
+        },
         appPricing: {
-            service:[pricingItem],
+            service: [pricingItem],
             functionalities: [pricingItem],
             devices: [pricingItem],
             totalPrice: {
-              type: Number
-            }
-          }
-          
+                type: Number,
+            },
+        },
     },
     {
-        strictPopulate:false,
+        strictPopulate: false,
         timestamps: true,
     }
 );
@@ -64,13 +67,13 @@ contactSchema.plugin(toJSON);
 contactSchema.plugin(paginate);
 contactSchema.pre('save', function (next) {
     const paths = Object.keys(contactSchema.paths);
-    
+
     paths.forEach((path) => {
         if (!this.isModified(path)) {
             this[path] = undefined;
         }
     });
-    
+
     next();
 });
 /**

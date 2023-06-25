@@ -20,6 +20,7 @@ const createChat = async (data) => {
 };
 const findUserChats = async (userId) => {
     const chat = await Chat.find({
+        isDeleted: false,
         $or: [{ senderId: userId }, { receiverId: userId }],
     }).populate('senderId receiverId', 'firstName lastName photoUrl email');
 
@@ -88,7 +89,13 @@ const setUnreadCount = async (chatId, count) => {
     return chat;
 };
 const deleteChat = async (chatId) => {
-    const chat = await Chat.findByIdAndDelete(chatId);
+    const chat = await Chat.findByIdAndUpdate(
+        chatId,
+        { isDeleted: true },
+        {
+            upsert: true,
+        }
+    );
     if (!chat) {
         throw new ApiError(httpStatus.NOT_FOUND, 'No conversation found!');
     }

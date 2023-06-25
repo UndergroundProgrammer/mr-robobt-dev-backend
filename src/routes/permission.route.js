@@ -4,6 +4,7 @@ const { permissionsValidation } = require('../validations');
 const { permissionController } = require('../controllers');
 
 const router = express.Router();
+router.route('/users/:groupId').get(permissionController.getGroupUsers);
 
 router
     .route('/')
