@@ -15,7 +15,7 @@ const register = {
         password: Joi.string().custom(password),
         phoneNo: Joi.string(),
         photoUrl: Joi.string(),
-        role: Joi.string().valid('staff', 'admin', 'client'),
+        role: Joi.string().valid('staff', 'admin', 'user'),
         group: Joi.custom(objectId),
         signedUpBy: Joi.string(),
         isApproved: Joi.bool(),

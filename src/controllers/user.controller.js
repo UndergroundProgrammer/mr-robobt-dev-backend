@@ -45,7 +45,6 @@ const sendUserChatLink = catchAsync(async (req, res) => {
         chat.senderId.firstName,
         token
     );
-    console.log('link sended successully');
     await res.status(httpStatus.NO_CONTENT).send();
 });
 module.exports = {

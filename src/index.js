@@ -33,12 +33,10 @@ io.on('connection', (socket) => {
             // if user is not added previously
             activeUsers.push({ userId: newUserId, socketId: socket.id });
         }
-        console.log('user new added to online', activeUsers);
 
         // send all active users to new user
         io.emit('get-users', activeUsers);
         io.emit('get-staff', activeStaff);
-        console.log(staffSockrtId, 'cnoversation event sended to this');
         io.to(staffSockrtId).emit('new-conversation', () => {});
     });
     socket.on('new-staff-add', (newUserId) => {
@@ -48,7 +46,6 @@ io.on('connection', (socket) => {
         ) {
             // if user is not added previously
             activeStaff.push({ userId: newUserId, socketId: socket.id });
-            console.log('staffmember added to online', activeStaff);
         }
         io.emit('get-staff', activeStaff);
     });
@@ -80,14 +77,12 @@ io.on('connection', (socket) => {
     // send message to a specific user
     socket.on('send-message', async (receiverId, data) => {
         const user = activeUsers.find((usera) => usera.userId === receiverId);
-        console.log(receiverId, user, activeUsers);
         if (user) {
             io.to(user.socketId).emit('receive-message', data);
         }
     });
     socket.on('send-message-staff', async (receiverId, data) => {
         const user = activeStaff.find((usera) => usera.userId === receiverId);
-        console.log(receiverId, user, activeStaff);
         if (user) {
             io.to(user.socketId).emit('receive-message', data);
         }
