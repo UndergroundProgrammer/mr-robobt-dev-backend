@@ -22,6 +22,7 @@ const getUsers = catchAsync(async (req, res) => {
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     Object.assign(options, { populate: 'group-groupName' });
     const result = await userService.queryUsers(filter, options);
+    console.log(result);
     res.send(result);
 });
 
@@ -38,11 +39,12 @@ const deleteUser = catchAsync(async (req, res) => {
     res.status(httpStatus.NO_CONTENT).send();
 });
 const sendUserChatLink = catchAsync(async (req, res) => {
-    const { chat } = req.body;
+    const { chat, email, name } = req.body;
+    console.log(email, name);
     const token = await tokenService.generateChatLinkToken(chat);
     await emailService.sendChatLinkEmail(
-        chat.senderId.email,
-        chat.senderId.firstName,
+        email ? email : chat.senderId.email,
+        name ? name : chat.senderId.firstName,
         token
     );
     await res.status(httpStatus.NO_CONTENT).send();

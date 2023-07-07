@@ -24,7 +24,7 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, text, html) => {
+const sendEmail = async (to, subject, html, text = null) => {
     const msg = { from: config.email.from, to, subject, text, html };
     await transport.sendMail(msg);
     return msg;

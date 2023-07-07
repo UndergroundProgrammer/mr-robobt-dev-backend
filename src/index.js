@@ -69,10 +69,10 @@ io.on('connection', (socket) => {
 
     socket.on('forceDisconnect', (userId) => {
         // remove user from active users
-        activeUsers = activeUsers.filter((user) => user.userId !== userId);
+        activeStaff = activeStaff.filter((user) => user.userId !== userId);
 
         // send all active users to all users
-        io.emit('get-users', activeUsers);
+        io.emit('get-staff', activeStaff);
     });
     // send message to a specific user
     socket.on('send-message', async (receiverId, data) => {
