@@ -9,6 +9,8 @@ const permissionRoute = require('./permission.route');
 const visitorRoute = require('./visitor.route');
 const newslettersRoute = require('./newsletters.route');
 const captchaRoute = require('./captcha.route');
+const genericRoute = require('./generic.route');
+
 const router = express.Router();
 
 const defaultRoutes = [
@@ -51,6 +53,10 @@ const defaultRoutes = [
     {
         path: '/captchas',
         route: captchaRoute,
+    },
+    {
+        path: '/generic',
+        route: genericRoute,
     },
 ];
 

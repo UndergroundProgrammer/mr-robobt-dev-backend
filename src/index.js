@@ -9,13 +9,15 @@ const { chatService } = require('./services');
 const server = http.createServer(app);
 const port = process.env.PORT || config.port;
 mongoose.set('strictQuery', false);
-mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-    logger.info('Connected to MongoDB');
+mongoose
+    .connect(config.mongoose.url, config.mongoose.options)
+    .then(async () => {
+        logger.info('Connected to MongoDB');
 
-    server.listen(port, () => {
-        logger.info(`Listening to port ${port}`);
+        server.listen(port, () => {
+            logger.info(`Listening to port ${port}`);
+        });
     });
-});
 
 const io = new Server(server, {
     cors: '*',

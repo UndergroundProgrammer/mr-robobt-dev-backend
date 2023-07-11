@@ -14,6 +14,7 @@ const updateUser = {
         isActive: Joi.bool(),
         role: Joi.string(),
         group: Joi.string(),
+        country: Joi.string(),
         signedUpBy: Joi.string(),
         isApproved: Joi.bool(),
     }),

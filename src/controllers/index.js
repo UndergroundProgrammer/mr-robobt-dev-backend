@@ -10,3 +10,4 @@ module.exports.newsLetterUsersController = require('./newsLetterUser.controller'
 module.exports.visitorController = require('./visitor.controller');
 module.exports.newsLettersController = require('./newsletter.controller');
 module.exports.captchaController = require('./captcha.controller');
+module.exports.genericController = require('./generic.controller');

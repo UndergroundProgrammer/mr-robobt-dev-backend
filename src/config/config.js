@@ -44,6 +44,9 @@ const envVarsSchema = Joi.object()
         CLIENT_URL: Joi.string().description('Client side url'),
         BACKEND_URL: Joi.string().description('Backend url'),
         CLIENT_USER_URL: Joi.string().description('Client user url'),
+        DB_STORAGE_SIZE_IN_GB: Joi.string().description(
+            'Total DB size in storage'
+        ),
     })
     .unknown();
 
@@ -59,6 +62,7 @@ module.exports = {
     clientUrl: envVars.CLIENT_URL,
     backendUrl: envVars.BACKEND_URL,
     clientUserUrl: envVars.CLIENT_USER_URL,
+    totalDBSIze: envVars.DB_STORAGE_SIZE_IN_GB,
     port: envVars.PORT,
     mongoose: {
         url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),

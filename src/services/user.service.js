@@ -100,7 +100,7 @@ const getAllUsersByGroupId = async (groupId) => {
         {
             group: groupId,
         },
-        ['firstName', 'surName']
+        ['firstName', 'surName', 'email']
     );
     if (!users) {
         throw new ApiError(httpStatus.NOT_FOUND, 'This group have on users');
