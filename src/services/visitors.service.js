@@ -21,7 +21,18 @@ const getVisitor = async (filters, options) => {
     return visitors;
 };
 
+const updateVisitorById = async (userId, updateBody) => {
+    const user = await Visitor.findByIdAndUpdate(userId, updateBody, {
+        upsert: true,
+    });
+    if (!user) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    }
+    return user;
+};
+
 module.exports = {
     createVisitor,
     getVisitor,
+    updateVisitorById,
 };

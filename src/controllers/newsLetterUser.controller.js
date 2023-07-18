@@ -41,11 +41,18 @@ const deleteUser = catchAsync(async (req, res) => {
     await newsletterUserServices.deleteNewsLetterUserById(req.params.userId);
     res.status(httpStatus.NO_CONTENT).send();
 });
-
+const unsubNewsLetter = catchAsync(async (req, res) => {
+    await newsletterUserServices.unsubscribeNewsLetter(req.body.email, {
+        ...req.body,
+        email: undefined,
+    });
+    res.status(httpStatus.NO_CONTENT).send();
+});
 module.exports = {
     createUser,
     updateUser,
     getUsers,
     getUser,
     deleteUser,
+    unsubNewsLetter,
 };

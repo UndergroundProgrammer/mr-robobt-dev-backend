@@ -57,6 +57,17 @@ const deleteNewsLetterUserById = async (userId) => {
     await user.remove();
     return user;
 };
+const unsubscribeNewsLetter = async (email, data) => {
+    const user = await NewsLetterUser.findOneAndUpdate({ email }, data);
+    if (!user) {
+        throw new ApiError(
+            httpStatus.NOT_FOUND,
+            'No subcription found with this email'
+        );
+    }
+
+    return user;
+};
 
 module.exports = {
     createNewsLetterUser,
@@ -65,4 +76,5 @@ module.exports = {
     getNewsLetterUserByEmail,
     updateNewsLetterUserById,
     deleteNewsLetterUserById,
+    unsubscribeNewsLetter,
 };

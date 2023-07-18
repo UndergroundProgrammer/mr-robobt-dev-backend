@@ -9,11 +9,13 @@ const createChat = async (data) => {
             httpStatus.NOT_ACCEPTABLE,
             'you couldnot message to yourself'
         );
-    const findChat = await Chat.findOne({ senderId, receiverId }).populate(
+    let findChat = await Chat.findOne({ senderId, receiverId }).populate(
         'senderId receiverId',
         'firstName lastName photoUrl email'
     );
-    if (findChat) return findChat;
+    if (findChat) {
+        return updateChat(findChat.id, { isClosed: false, isDeleted: false });
+    }
     const chat = await Chat.create({ senderId, receiverId });
     chat.populate('senderId receiverId', 'firstName lastName photoUrl email');
     return chat.save();
@@ -104,12 +106,12 @@ const deleteChat = async (chatId) => {
 };
 const updateChat = async (chatId, updateChat) => {
     const chat = await Chat.findByIdAndUpdate(chatId, updateChat, {
-        upsert: true,
-    });
+        new: true,
+    }).populate('senderId receiverId', 'firstName lastName photoUrl email');
     if (!chat) {
         throw new ApiError(httpStatus.NOT_FOUND, 'No conversation found!');
     }
-
+    console.log(updateChat, chat);
     return chat;
 };
 

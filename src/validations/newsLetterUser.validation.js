@@ -11,6 +11,14 @@ const updateUser = {
         unsubscribedBy: Joi.string(),
     }),
 };
+const unsubUser = {
+    body: Joi.object().keys({
+        email: Joi.string().required(),
+        reason: Joi.string(),
+        status: Joi.string().required(),
+        unsubscribedBy: Joi.string(),
+    }),
+};
 
 const createUser = {
     body: Joi.object().keys({
@@ -33,4 +41,5 @@ module.exports = {
     getUser,
     deleteUser,
     createUser,
+    unsubUser,
 };

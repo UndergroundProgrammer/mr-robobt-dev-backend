@@ -9,7 +9,7 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<ChatUser>}
  */
 const createChatUser = async (userBody) => {
-    const alreadyUser = await getChatUserByEmail(userBody.email);
+    let alreadyUser = await getChatUserByEmail(userBody.email);
     if (alreadyUser) {
         return alreadyUser;
     }

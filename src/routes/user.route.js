@@ -15,6 +15,12 @@ const {
 const router = express.Router();
 router.route('/send-chatlink').post(userController.sendUserChatLink);
 router
+    .route('/newsletterusers/unsub')
+    .post(
+        validate(newsLetterUserValidation.unsubUser),
+        newsLetterUsersController.unsubNewsLetter
+    );
+router
     .route('/newsletterusers')
     .post(
         validate(newsLetterUserValidation.createUser),

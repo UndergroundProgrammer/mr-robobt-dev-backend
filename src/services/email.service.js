@@ -39,9 +39,11 @@ const sendEmail = async (to, subject, html, text = null) => {
 const sendResetPasswordEmail = async (to, username, token) => {
     const subject = 'Reset Password';
     const resetpasswordEmailUrl = `${config.clientUrl}auth/reset_password?token=${token}`;
+    const unsubscribLink = `${config.clientUserUrl}unsubNewsLetter`;
     const placeholder = {
         username: username,
         verificationLink: resetpasswordEmailUrl,
+        unsubscribeLink: unsubscribLink,
     };
     const html = loadHtmlTemplate('forgotPasswordTemplate.html', placeholder);
 
@@ -57,9 +59,12 @@ const sendResetPasswordEmail = async (to, username, token) => {
 const sendVerificationEmail = async (username, to, token) => {
     const subject = 'Email Verification';
     const verificationEmailUrl = `${config.backendUrl}api/auth/verify-email?token=${token}`;
+    const unsubscribLink = `${config.clientUserUrl}unsubNewsLetter`;
+
     const placeholder = {
         verificationLink: verificationEmailUrl,
         username: username,
+        unsubscribeLink: unsubscribLink,
     };
     const html = loadHtmlTemplate(
         'emailVerificationTemplate.html',
@@ -78,9 +83,11 @@ If you did not create an account, then ignore this email.`;
 };
 const sendSignupInvitationEmail = async (to, group, token) => {
     const subject = 'Signup invitation';
+    const unsubscribLink = `${config.clientUserUrl}unsubNewsLetter`;
     const invitationEmailUrl = `${config.clientUrl}auth/signup?token=${token}&group=${group}`;
     const placeholder = {
         verificationLink: invitationEmailUrl,
+        unsubscribeLink: unsubscribLink,
     };
     const html = loadHtmlTemplate('signupInvitationTemplate.html', placeholder);
 
@@ -89,9 +96,11 @@ const sendSignupInvitationEmail = async (to, group, token) => {
 const sendChatLinkEmail = async (to, name, token) => {
     const subject = 'Chat Receipt';
     const chatLink = `${config.clientUserUrl}?chatlink=${token}`;
+    const unsubscribLink = `${config.clientUserUrl}unsubNewsLetter`;
     const placeholder = {
         username: name,
         verificationLink: chatLink,
+        unsubscribeLink: unsubscribLink,
     };
     const html = loadHtmlTemplate('chatLinkTemplate.html', placeholder);
 
@@ -99,8 +108,15 @@ const sendChatLinkEmail = async (to, name, token) => {
 };
 
 const sendNewsLetterSubscribedEmail = async (to) => {
+    const unsubscribLink = `${config.clientUserUrl}unsubNewsLetter`;
     const subject = 'NewsLetter Subscription';
-    const html = loadHtmlTemplate('newsLetterSubscriptionTemplate.html');
+    const placeholder = {
+        unsubscribeLink: unsubscribLink,
+    };
+    const html = loadHtmlTemplate(
+        'newsLetterSubscriptionTemplate.html',
+        placeholder
+    );
     await sendEmail(to, subject, html);
 };
 module.exports = {
