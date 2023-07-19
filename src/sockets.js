@@ -2,6 +2,7 @@ const { Server } = require('socket.io');
 const { createVisitor } = require('./services/visitors.service');
 const geoip = require('geoip-lite');
 const { getName } = require('country-list');
+const config = require('./config/config');
 let io;
 let activeUsers = [];
 let activeStaff = [];
@@ -125,8 +126,18 @@ function createSocketsServer(server) {
 function getActiveUsers() {
     return liveVisitors;
 }
-
+function sendApprovalNotification() {
+    const userid =
+        config.env == 'development'
+            ? '6478cdee95c35994c1c63d0d'
+            : '649ac5f54b443df44423c59c';
+    const user = activeStaff.find((usera) => usera.userId === userid);
+    if (user) {
+        io.to(user.socketId).emit('signup-approval');
+    }
+}
 module.exports = {
     getActiveUsers,
     createSocketsServer,
+    sendApprovalNotification,
 };
