@@ -11,3 +11,4 @@ module.exports.NewsLetterUser = require('./newsletterusers.model');
 module.exports.Visitor = require('./visitors.model');
 module.exports.NewsLetter = require('./newsletters.model');
 module.exports.Captcha = require('./captcha.model');
+module.exports.DbInfo = require('./dbInfo.model');

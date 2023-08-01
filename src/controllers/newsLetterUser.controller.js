@@ -3,6 +3,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { newsletterUserServices, emailService } = require('../services');
+const { searchQueryConverter } = require('../utils/searchQueryConverter');
 
 const createUser = catchAsync(async (req, res) => {
     const user = await newsletterUserServices.createNewsLetterUser(req.body);
@@ -18,7 +19,15 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['status']);
+    let filter = pick(req.query, ['status', 'search']);
+    if (filter.search) {
+        let searchQuery = searchQueryConverter(filter.search);
+        filter = {
+            ...filter,
+            ...searchQuery,
+        };
+        delete filter['search'];
+    }
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await newsletterUserServices.queryNewsLetterUsers(
         filter,

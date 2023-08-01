@@ -10,14 +10,27 @@ const {
     chatService,
     tokenService,
 } = require('../services');
+const { checkUserAndDisconnect } = require('../sockets');
+const { searchQueryConverter } = require('../utils/searchQueryConverter');
 
 const updateUser = catchAsync(async (req, res) => {
     const user = await userService.updateUserById(req.params.userId, req.body);
-    res.send(user);
+    if (req.body.isActive === false) {
+        checkUserAndDisconnect(user.id);
+    }
+    res.send({});
 });
 
 const getUsers = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['isActive', 'role', 'isApproved']);
+    let filter = pick(req.query, ['isActive', 'role', 'isApproved']);
+    if (filter.search) {
+        let searchQuery = searchQueryConverter(filter.search);
+        filter = {
+            ...filter,
+            ...searchQuery,
+        };
+        delete filter['search'];
+    }
     filter.role = filter.role || { $ne: 'admin' };
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     Object.assign(options, { populate: 'group-groupName' });

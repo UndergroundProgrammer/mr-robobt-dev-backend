@@ -136,8 +136,16 @@ function sendApprovalNotification() {
         io.to(user.socketId).emit('signup-approval');
     }
 }
+
+function checkUserAndDisconnect(userId) {
+    const user = activeStaff.find((usera) => usera.userId === receiverId);
+    if (user) {
+        io.to(user.socketId).emit('user_inacive_by_admin');
+    }
+}
 module.exports = {
     getActiveUsers,
     createSocketsServer,
     sendApprovalNotification,
+    checkUserAndDisconnect,
 };

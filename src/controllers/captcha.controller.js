@@ -3,6 +3,7 @@ const { getName } = require('country-list');
 const catchAsync = require('../utils/catchAsync');
 const { CaptchaServices } = require('../services');
 const pick = require('../utils/pick');
+const { searchQueryConverter } = require('../utils/searchQueryConverter');
 const createCaptcha = catchAsync(async (req, res) => {
     const ip =
         req.headers['cf-connecting-ip'] ||
@@ -22,7 +23,15 @@ const createCaptcha = catchAsync(async (req, res) => {
     res.send(captcha);
 });
 const getCaptchas = catchAsync(async (req, res) => {
-    const filter = pick(req.query, []);
+    let filter = pick(req.query, ['search']);
+    if (filter.search) {
+        let searchQuery = searchQueryConverter(filter.search);
+        filter = {
+            ...filter,
+            ...searchQuery,
+        };
+        delete filter['search'];
+    }
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
 
     const captchas = await CaptchaServices.getCaptcha(filter, options);
