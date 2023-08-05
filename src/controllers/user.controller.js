@@ -35,7 +35,7 @@ const getUsers = catchAsync(async (req, res) => {
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     Object.assign(options, { populate: 'group-groupName' });
     const result = await userService.queryUsers(filter, options);
-    console.log(result);
+
     res.send(result);
 });
 

@@ -55,11 +55,13 @@ function createSocketsServer(server) {
             io.to(staffSockrtId).emit('new-conversation', () => {});
         });
         socket.on('new-staff-add', (newUserId) => {
+            console.log(newUserId);
             if (
                 newUserId &&
                 !activeStaff.some((user) => user.userId === newUserId)
             ) {
                 // if user is not added previously
+                console.log(newUserId);
                 activeStaff.push({
                     userId: newUserId,
                     socketId: socket.id,
@@ -138,7 +140,7 @@ function sendApprovalNotification() {
 }
 
 function checkUserAndDisconnect(userId) {
-    const user = activeStaff.find((usera) => usera.userId === receiverId);
+    const user = activeStaff.find((usera) => usera.userId === userId);
     if (user) {
         io.to(user.socketId).emit('user_inacive_by_admin');
     }
