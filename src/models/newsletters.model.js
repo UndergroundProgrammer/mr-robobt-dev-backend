@@ -11,6 +11,10 @@ const newsLetterSchema = mongoose.Schema(
             type: String,
             trim: true,
         },
+        logo: {
+            type: String,
+            trim: true,
+        },
     },
     {
         timestamps: true,

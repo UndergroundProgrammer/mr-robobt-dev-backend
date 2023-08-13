@@ -3,13 +3,17 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { NewsLetterServices } = require('../services');
-const { searchQueryConverter } = require('../utils/searchQueryConverter');
+const {
+    sendNewsLetterSendEmailToAllSbscriptors,
+} = require('../services/email.service');
 
 const addNewsLetter = catchAsync(async (req, res) => {
     const newsletter = await NewsLetterServices.addNewsLetter(req.body);
     if (!newsletter) {
         throw new ApiError(500, 'Something went wrong');
     }
+
+    await sendNewsLetterSendEmailToAllSbscriptors;
     res.status(httpStatus.OK).send(newsletter);
 });
 const getAllNewsLetters = catchAsync(async (req, res) => {

@@ -68,7 +68,12 @@ const unsubscribeNewsLetter = async (email, data) => {
 
     return user;
 };
-
+const getNewsLetterUsersWithoutPagination = async () => {
+    const newsletteruser = await NewsLetterUser.find();
+    if (!newsletteruser)
+        throw new ApiError(httpStatus.NOT_FOUND, 'NewsLetter not found!');
+    return newsletteruser;
+};
 module.exports = {
     createNewsLetterUser,
     queryNewsLetterUsers,
@@ -77,4 +82,5 @@ module.exports = {
     updateNewsLetterUserById,
     deleteNewsLetterUserById,
     unsubscribeNewsLetter,
+    getNewsLetterUsersWithoutPagination,
 };
