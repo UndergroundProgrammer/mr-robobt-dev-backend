@@ -13,3 +13,4 @@ module.exports.VisitorServices = require('./visitors.service');
 module.exports.NewsLetterServices = require('./newsletters.service');
 module.exports.CaptchaServices = require('./captcha.service');
 module.exports.DbInfoService = require('./dbInfo.service');
+module.exports.TestimonialService = require('./testimonial.service');

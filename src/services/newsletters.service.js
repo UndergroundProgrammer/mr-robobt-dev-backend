@@ -1,11 +1,17 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { NewsLetter } = require('../models');
+const {
+    getNewsLetterUsersWithoutPagination,
+} = require('./newsletteruser.service');
+const { sendNewsLetterSendEmailToAllSbscriptors } = require('./email.service');
 const addNewsLetter = async (data) => {
     const newsletter = await NewsLetter.create(data);
     if (!newsletter) {
         throw new ApiError(500, 'Something went wrong');
     }
+    const users = await getNewsLetterUsersWithoutPagination();
+    await sendNewsLetterSendEmailToAllSbscriptors(users, newsletter);
     return newsletter;
 };
 const getNewsLetters = async (filters, options) => {
@@ -32,6 +38,7 @@ const getNewsLetterById = async (newsletterId) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'NewsLetter not found!');
     return newsletter;
 };
+
 module.exports = {
     addNewsLetter,
     getNewsLetters,

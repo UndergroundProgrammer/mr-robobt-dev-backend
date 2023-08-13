@@ -8,3 +8,4 @@ module.exports.permissionsValidation = require('./permission.validation');
 module.exports.chatUserValidation = require('./chatuser.validation');
 module.exports.newsLetterUserValidation = require('./newsLetterUser.validation');
 module.exports.newslettersValidation = require('./newsletters.validation');
+module.exports.testimonialValidation = require('./testimonials.validation');
