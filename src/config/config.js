@@ -30,6 +30,9 @@ const envVarsSchema = Joi.object()
         EMAIL_FROM: Joi.string().description(
             'the from field in the emails sent by the app'
         ),
+        EMAIL_TO: Joi.string().description(
+            'To email field to receive mails on personal mail'
+        ),
         GOOGLE_CLIENT_ID: Joi.string().description('client id for google'),
         GOOGLE_CLIENT_SECRET: Joi.string().description(
             'Client secert for google'
@@ -93,6 +96,7 @@ module.exports = {
             },
         },
         from: envVars.EMAIL_FROM,
+        to: envVars.EMAIL_TO,
     },
     google: {
         clientId: envVars.GOOGLE_CLIENT_ID,

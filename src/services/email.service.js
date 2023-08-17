@@ -4,6 +4,7 @@ const logger = require('../config/logger');
 const fs = require('fs');
 const path = require('path');
 const loadHtmlTemplate = require('../utils/LoadHtmlTemplate');
+const emailContentGenerator = require('../utils/emailContentGenerator');
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
 if (config.env !== 'test') {
@@ -24,8 +25,8 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, html, text = null) => {
-    const msg = { from: config.email.from, to, subject, text, html };
+const sendEmail = async (to, subject, html, from = config.email.from) => {
+    const msg = { from, to, subject, html };
     await transport.sendMail(msg);
     return msg;
 };
@@ -134,6 +135,19 @@ const sendNewsLetterSendEmailToAllSbscriptors = async (users, newsletter) => {
     });
     await Promise.all(emailPromise);
 };
+
+const sendNotificationmail = async (contactDetail) => {
+    const contentHtml = emailContentGenerator(contactDetail);
+    const unsubscribLink = `${config.clientUserUrl}unsubnewsletter`;
+    const subject = 'Notification via Mr. Robot dev';
+    const placeholder = {
+        unsubscribeLink: unsubscribLink,
+        content: contentHtml,
+    };
+    const html = loadHtmlTemplate('notificationTemplate.html', placeholder);
+    await sendEmail(config.email.to, subject, html, contactDetail.email);
+};
+
 module.exports = {
     transport,
     sendEmail,
@@ -144,4 +158,5 @@ module.exports = {
     sendChatLinkEmail,
     sendNewsLetterSubscribedEmail,
     sendNewsLetterSendEmailToAllSbscriptors,
+    sendNotificationmail,
 };
