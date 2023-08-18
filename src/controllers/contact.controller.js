@@ -4,12 +4,11 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService, contactService } = require('../services');
 const { searchQueryConverter } = require('../utils/searchQueryConverter');
+const { sendNotificationmail } = require('../services/email.service');
 
 const contactus = catchAsync(async (req, res) => {
     const contact = await contactService.contactUs(req.body);
-    if (!contact) {
-        throw new ApiError(500, 'Something went wrong');
-    }
+    await sendNotificationmail(req.body);
     res.send(contact);
 });
 const getContactsForms = catchAsync(async (req, res) => {
