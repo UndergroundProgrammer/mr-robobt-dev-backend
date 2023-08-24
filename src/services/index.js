@@ -15,3 +15,4 @@ module.exports.CaptchaServices = require("./captcha.service");
 module.exports.DbInfoService = require("./dbInfo.service");
 module.exports.TestimonialService = require("./testimonial.service");
 module.exports.CompanyStatsService = require("./companystats.service");
+module.exports.NotificationEmailsService = require("./notificationemails.service");

@@ -12,6 +12,7 @@ const captchaRoute = require("./captcha.route");
 const genericRoute = require("./generic.route");
 const testimonialRoute = require("./testimonial.route");
 const companyStatsRoute = require("./companystats.route");
+const notificationemails = require("./notificationemails.route");
 
 const router = express.Router();
 
@@ -67,6 +68,10 @@ const defaultRoutes = [
   {
     path: "/companystats",
     route: companyStatsRoute,
+  },
+  {
+    path: "/notificationemails",
+    route: notificationemails,
   },
 ];
 

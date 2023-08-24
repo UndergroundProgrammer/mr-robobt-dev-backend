@@ -13,3 +13,4 @@ module.exports.captchaController = require("./captcha.controller");
 module.exports.DbInfoController = require("./DbInfo.controller");
 module.exports.TestimonialController = require("./testimonial.controller");
 module.exports.CompanyStatsController = require("./companystats.controller");
+module.exports.NotificationEmailsController = require("./notificationemails.controller");

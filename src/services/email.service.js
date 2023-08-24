@@ -133,7 +133,7 @@ const sendNewsLetterSendEmailToAllSbscriptors = async (users, newsletter) => {
   await Promise.all(emailPromise);
 };
 
-const sendNotificationmail = async (contactDetail) => {
+const sendNotificationmail = async (emails,contactDetail) => {
   const contentHtml = emailContentGenerator(contactDetail);
   const unsubscribLink = `${config.clientUserUrl}unsubnewsletter`;
   const subject = "Notification via Mr. Robot dev";
@@ -142,7 +142,13 @@ const sendNotificationmail = async (contactDetail) => {
     content: contentHtml,
   };
   const html = loadHtmlTemplate("notificationTemplate.html", placeholder);
-  await sendEmail(config.email.to, subject, html, contactDetail.email);
+  if(emails.length>0){
+    const emailPromise = emails.map((email) => {
+      sendEmail(email.email, subject, html);
+    });
+    await Promise.all(emailPromise);
+  }
+  // await sendEmail(config.email.to, subject, html);
 };
 
 module.exports = {
