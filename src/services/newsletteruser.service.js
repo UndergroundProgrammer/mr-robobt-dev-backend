@@ -1,6 +1,7 @@
 const httpStatus = require("http-status");
 const { NewsLetterUser } = require("../models");
 const ApiError = require("../utils/ApiError");
+const { emailService } = require("../services");
 
 /**
  * Create a user
@@ -10,9 +11,10 @@ const ApiError = require("../utils/ApiError");
 const createNewsLetterUser = async (userBody) => {
   const alreadyUser = await getNewsLetterUserByEmail(userBody.email);
   if (alreadyUser) {
-    return alreadyUser;
+    throw new ApiError(httpStatus.NOT_FOUND, "Something went wrong");
   }
   const user = await NewsLetterUser.create(userBody);
+  await emailService.sendNewsLetterSubscribedEmail(userBody.email);
   return user;
 };
 

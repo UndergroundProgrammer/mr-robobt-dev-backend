@@ -1,5 +1,5 @@
 const httpStatus = require("http-status");
-const geoip = require("geoip-lite");
+const geoip = require("geoip-country");
 const { getName } = require("country-list");
 const catchAsync = require("../utils/catchAsync");
 const { VisitorServices } = require("../services");
@@ -38,7 +38,6 @@ const getVisitors = catchAsync(async (req, res) => {
     filter["_id"] = { $in: userIds };
   }
   const options = pick(req.query, ["sortBy", "limit", "page"]);
-  console.log(filter);
   const user = await VisitorServices.getVisitor(filter, options);
   res.status(200).send(user);
 });

@@ -7,7 +7,6 @@ const { searchQueryConverter } = require("../utils/searchQueryConverter");
 
 const createUser = catchAsync(async (req, res) => {
   const user = await newsletterUserServices.createNewsLetterUser(req.body);
-  await emailService.sendNewsLetterSubscribedEmail(req.body.email);
   res.send(user);
 });
 const updateUser = catchAsync(async (req, res) => {

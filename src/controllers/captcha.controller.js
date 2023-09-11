@@ -1,4 +1,4 @@
-const geoip = require("geoip-lite");
+const geoip = require("geoip-country");
 const { getName } = require("country-list");
 const catchAsync = require("../utils/catchAsync");
 const { CaptchaServices } = require("../services");
@@ -13,7 +13,6 @@ const createCaptcha = catchAsync(async (req, res) => {
     "UNKNOWN";
   const geo = geoip.lookup(ip);
   const country = geo ? getName(geo.country) : "UNKNOWN";
-
   const captcha = await CaptchaServices.createCaptcha({
     userClassification: req.body.userClassification,
     ipAddress: ip,
