@@ -11,6 +11,7 @@ const modalNames = [
   "Contact US",
   "NewsLetter Users",
   "Site Visitors",
+  "Logs",
 ];
 const getModelAndDeleteData = catchAsync(async (req, res) => {
   let { modelName, attributes } = pick(req.query, ["modelName", "attributes"]);

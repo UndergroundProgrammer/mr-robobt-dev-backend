@@ -13,6 +13,7 @@ const genericRoute = require("./generic.route");
 const testimonialRoute = require("./testimonial.route");
 const companyStatsRoute = require("./companystats.route");
 const notificationemails = require("./notificationemails.route");
+const logsRoute = require("./logs.route");
 
 const router = express.Router();
 
@@ -72,6 +73,10 @@ const defaultRoutes = [
   {
     path: "/notificationemails",
     route: notificationemails,
+  },
+  {
+    path: "/logs",
+    route: logsRoute,
   },
 ];
 
