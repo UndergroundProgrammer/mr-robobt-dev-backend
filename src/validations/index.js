@@ -11,3 +11,4 @@ module.exports.newslettersValidation = require("./newsletters.validation");
 module.exports.testimonialValidation = require("./testimonials.validation");
 module.exports.companyStatsValidation = require("./companystats.validation");
 module.exports.notificationEmailsValidation = require("./notificationemails.validation");
+module.exports.logsValidation = require("./logs.validation");

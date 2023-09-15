@@ -15,3 +15,4 @@ module.exports.DbInfo = require("./dbInfo.model");
 module.exports.Testimonial = require("./testimonial.model");
 module.exports.CompanyStats = require("./companystats.model");
 module.exports.NotificationEmails = require("./notificationemails.model");
+module.exports.Logs = require("./logs.model");
